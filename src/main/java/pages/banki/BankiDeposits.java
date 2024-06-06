@@ -159,7 +159,6 @@ public class BankiDeposits extends BasePage {
      *Метод получения списка вкладов по блокам и фомрирования данных по банку включающих названия банка, ставку вклада, срок вклада, ставку вклада в формате Double
      * Есть проверка, что получены все найденные блоки вкладов
      * Есть сортировка по ставке, которая убирает результаты, которые меньше найденной максимальной ставки более, чем на 2 пункта
-     * @exception InterruptedException
      * @return Возвращает весь текст, который есть в блоке найденного вклада
      *
      */
@@ -173,7 +172,7 @@ public class BankiDeposits extends BasePage {
         List<String> depositsText= deposits.stream().map(x->(x.getText())).collect(Collectors.toList());
         for (int i = 1; i < depositsText.size()+1; i++) {
 
-//            SelenideElement element = deposits.get(i).find(By.xpath(depositsListRatePath));
+
             SelenideElement elementDepositRate = $x(depositsListPath+String.format("[%s]"+depositsListRatePath,i));
             SelenideElement elementDepositBank = $x(depositsListPath+String.format("[%s]"+depositsListNamePath,i));
             SelenideElement elementDepositPeriod = $x(depositsListPath+String.format("[%s]"+depositsListPeriodPath,i));
@@ -185,9 +184,6 @@ public class BankiDeposits extends BasePage {
             Pattern pattern = Pattern.compile("\\d{1,2}[,]\\d{2}");
             Matcher matcherDepositRate = pattern.matcher(elementDepositRate.getText());
             matcherDepositRate.find();
-//            while (matcherDepositRate.find()) {
-//                System.out.println(matcherDepositRate.group().replaceAll(",", "."));
-//            }
 
             banksData.add(
                     new BankData
@@ -208,7 +204,7 @@ public class BankiDeposits extends BasePage {
 
         int depositsMatchSize2 = deposits.size();
         System.out.println("Количество депозитов после обработки= " +depositsMatchSize2);
-        Assertions.assertTrue(depositsMatchSize1==depositsMatchSize2, "Не отображены все найденные вклады");
+        Assertions.assertEquals(depositsMatchSize1, depositsMatchSize2, "Не отображены все найденные вклады");
 
         System.out.println("Количество отсортированных депозитов "+ sortedBanksData.size());
 //        banksData.stream().forEach(x-> System.out.println(x.toString()));
@@ -217,15 +213,4 @@ public class BankiDeposits extends BasePage {
         return depositsText;
 
     }
-
-
-    //div[contains(@class, 'DropdownList')]//*[contains(text(),'По ставке')]
 }
-// "\\^\\[а-яА-Я]\\+\\[\\S\\]"
-
-
-//            Pattern pattern = Pattern.compile("^[а-яА-Я]+[\\S]");
-//            Matcher matcher = pattern.matcher(depositsText.get(i));
-//            while (matcher.find()) {
-//                System.out.println(matcher.group());
-//            }
