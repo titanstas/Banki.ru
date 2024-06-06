@@ -16,8 +16,6 @@ public class Tests extends BaseTest {
 
     @Test
     @DisplayName("Проверка вкладки Вклады")
-//    @ParameterizedTest(name = "{displayName} {arguments}")
-//    @MethodSource("helpers.DataProvider#providerCheckingMoney")
     public void FirstTest() throws InterruptedException {
 
         open("https://www.banki.ru/", BankiMain.class)
@@ -33,7 +31,7 @@ public class Tests extends BaseTest {
                 .showMoreDeposits()
                 .getDeposits();
 
-                   double i=0.00;
+//                   double i=0.00;
 
 
 
@@ -46,12 +44,7 @@ public class Tests extends BaseTest {
         Matcher matcher = pattern.matcher(s);
         matcher.find();
         System.out.println(matcher.group().replaceAll(",", "."));
-//        depositRate.add(Double.valueOf(matcher.group().replaceAll(",", ".")));
 
-
-//        while (matcher.find()) {
-//            System.out.println(matcher.group().replaceAll(",", "."));
-//        }
 
 
 
