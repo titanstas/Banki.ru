@@ -1,11 +1,8 @@
 package ru.banki;
 
 
-import com.codeborne.selenide.WebDriverRunner;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import org.openqa.selenium.Cookie;
 import pages.banki.BankiMain;
 
 import java.util.regex.Matcher;
@@ -43,7 +40,7 @@ public class Tests extends BaseTest {
     }
 
     @Test
-    public void SecondTest() throws InterruptedException {
+    public void SecondTest() {
         String s =" Cтавка \n 17,30%";
         Pattern pattern = Pattern.compile("\\d{1,2}[,]\\d{2}");
         Matcher matcher = pattern.matcher(s);

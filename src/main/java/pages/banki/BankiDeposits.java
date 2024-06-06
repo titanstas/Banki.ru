@@ -6,7 +6,6 @@ import com.codeborne.selenide.SelenideElement;
 import helpers.BankData;
 import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
-import org.openqa.selenium.By;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
 public class BankiDeposits extends BasePage {
