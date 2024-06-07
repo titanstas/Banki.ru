@@ -7,7 +7,12 @@ import helpers.BankData;
 import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -85,7 +90,7 @@ public class BankiDeposits extends BasePage {
      * @return Возвращает класс страницы вкладов BankiDeposits.class
      */
     @Step("Нажать Показать еще")
-    public BankiDeposits showMoreDeposits() throws InterruptedException {
+    public BankiDeposits showMoreDeposits()  {
 
         while ($x(showMoreDepositsPath).is(Condition.visible))
         {
@@ -159,12 +164,17 @@ public class BankiDeposits extends BasePage {
      *Метод получения списка вкладов по блокам и фомрирования данных по банку включающих названия банка, ставку вклада, срок вклада, ставку вклада в формате Double
      * Есть проверка, что получены все найденные блоки вкладов
      * Есть сортировка по ставке, которая убирает результаты, которые меньше найденной максимальной ставки более, чем на 2 пункта
+     * Есть функциональность отправки данных по банкам в файл
      * @return Возвращает весь текст, который есть в блоке найденного вклада
      *
      */
     @Step("Собрать вклады")
-    public List<String> getDeposits() throws InterruptedException {
-        Thread.sleep(1000);
+    public List<String> getDeposits()  {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         ElementsCollection deposits = $$x(depositsListPath);
         int depositsMatchSize1 = deposits.size();
         System.out.println("Количество депозитов до обработки= " +depositsMatchSize1);
@@ -209,6 +219,14 @@ public class BankiDeposits extends BasePage {
         System.out.println("Количество отсортированных депозитов "+ sortedBanksData.size());
 //        banksData.stream().forEach(x-> System.out.println(x.toString()));
         sortedBanksData.stream().forEach(x-> System.out.println(x.toString()));
+
+        Path bankiPath = Paths.get("C:\\Users\\STAS\\Desktop\\Banki.txt");
+        List <String> sortedBanksDataToString =  sortedBanksData.stream().map(x->x.toString()).collect(Collectors.toList());
+        try {
+            Files.write(bankiPath, sortedBanksDataToString);
+        } catch (IOException e) {
+            System.out.println("Нет файла для записи данных");
+        }
 
         return depositsText;
 

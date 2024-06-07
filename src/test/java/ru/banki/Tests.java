@@ -5,6 +5,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.banki.BankiMain;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,7 +21,7 @@ public class Tests extends BaseTest {
 
     @Test
     @DisplayName("Проверка вкладки Вклады")
-    public void FirstTest() throws InterruptedException {
+    public void FirstTest()  {
 
         open("https://www.banki.ru/", BankiMain.class)
                 .addCookie("BANKI_RU_LOGIN","user-83188454028")
@@ -45,9 +50,12 @@ public class Tests extends BaseTest {
         matcher.find();
         System.out.println(matcher.group().replaceAll(",", "."));
 
+    }
 
-
-
+    @Test
+    public void ThirdTest() throws IOException {
+        Path bankiPath = Paths.get("C:\\Users\\STAS\\Desktop\\Banki.txt");
+        Files.write(bankiPath, Collections.singleton("erteeee"));
 
 
     }
